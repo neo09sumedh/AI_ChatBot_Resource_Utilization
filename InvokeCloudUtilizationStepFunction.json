@@ -1,0 +1,51 @@
+{
+  "Comment": "State machine to handle EC2 and other service requests",
+  "StartAt": "ParseMessage",
+  "States": {
+    "ParseMessage": {
+      "Type": "Pass",
+      "Parameters": {
+        "parsed.$": "States.StringToJson($.message)"
+      },
+      "ResultPath": "$.parsed",
+      "Next": "CheckIntentName"
+    },
+    "CheckIntentName": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.parsed.parsed.intent_name",
+          "StringEquals": "CheckInstanceSize",
+          "Next": "EC2"
+        }
+      ],
+      "Default": "OtherServices"
+    },
+    "EC2": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:324037300355:function:LambdaSagemakerInvocation",
+      "Parameters": {
+        "request_id.$": "$.parsed.parsed.request_id",
+        "session_id.$": "$.parsed.parsed.session_id",
+        "user_query.$": "$.parsed.parsed.user_query",
+        "intent_name.$": "$.parsed.parsed.intent_name",
+        "instance_id.$": "$.parsed.parsed.instance_id"
+      },
+      "End": true
+    },
+    "OtherServices": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:324037300355:function:OtherServicesUtilization",
+      "Parameters": {
+        "request_id.$": "$.parsed.parsed.request_id",
+        "session_id.$": "$.parsed.parsed.session_id",
+        "user_query.$": "$.parsed.parsed.user_query",
+        "intent_name.$": "$.parsed.parsed.intent_name",
+        "service_name.$": "$.parsed.parsed.service_name",
+        "from_date.$": "$.parsed.parsed.from_date",
+        "to_date.$": "$.parsed.parsed.to_date"
+      },
+      "End": true
+    }
+  }
+}

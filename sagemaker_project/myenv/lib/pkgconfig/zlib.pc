@@ -1,0 +1,13 @@
+prefix=/Users/sumedh/IUCloud/Cloud_Project/sagemaker_project/myenv
+exec_prefix=/Users/sumedh/IUCloud/Cloud_Project/sagemaker_project/myenv
+libdir=/Users/sumedh/IUCloud/Cloud_Project/sagemaker_project/myenv/lib
+sharedlibdir=/Users/sumedh/IUCloud/Cloud_Project/sagemaker_project/myenv/lib
+includedir=/Users/sumedh/IUCloud/Cloud_Project/sagemaker_project/myenv/include
+
+Name: zlib
+Description: zlib compression library
+Version: 1.2.13
+
+Requires:
+Libs: -L${libdir} -L${sharedlibdir} -lz
+Cflags: -I${includedir}
