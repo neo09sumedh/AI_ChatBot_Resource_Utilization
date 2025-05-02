@@ -140,6 +140,7 @@ Output: "Scale down to a smaller instance to reduce costs. Suggested type: t2.xl
 2) Node.js / Python installed locally (for Lambda functions)
 3) AWS CDK, SAM CLI, or Terraform (optional for IaC deployments)
 4) Amazon Lex Bot configured with intents for cost queries
+5) Need to deploy AWS services manually , Terraform deployment is planned in next Phase.
 ### Development Setup
 
 ```bash
