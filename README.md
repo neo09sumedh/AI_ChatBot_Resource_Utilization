@@ -158,23 +158,23 @@ npm run preview
 
 1️⃣ Clone the Repository
 
-   <pre> ```git clone https://github.com/neo09sumedh/AI_ChatBot_Resource_Utilization.git
-   cd AI_ChatBot_Resource_Utilization``` </pre>
+   <pre> git clone https://github.com/neo09sumedh/AI_ChatBot_Resource_Utilization.git
+   cd AI_ChatBot_Resource_Utilization</pre>
 
 2️⃣ Set Up S3 Bucket for Historical Data
 Upload historical Cost & Usage Reports and CloudWatch metrics to an S3 bucket.
 
- <pre> ```aws s3 mb s3://<your-s3-bucket-name>
-aws s3 cp historical_data/ s3://<your-s3-bucket-name>/ --recursive </pre> ```
+ <pre> aws s3 mb s3://<your-s3-bucket-name>
+aws s3 cp historical_data/ s3://<your-s3-bucket-name>/ --recursive </pre>
 
 3️⃣ Deploy DynamoDB Table
 Provision a DynamoDB table to store chat request/response metadata.
 
- <pre> ```aws dynamodb create-table \
+ <pre> aws dynamodb create-table \
     --table-name ChatbotRequests \
     --attribute-definitions AttributeName=SessionId,AttributeType=S \
     --key-schema AttributeName=SessionId,KeyType=HASH \
-    --billing-mode PAY_PER_REQUEST </pre> ```
+    --billing-mode PAY_PER_REQUEST </pre> 
 
 4️⃣ Deploy Lambda Functions
 Deploy the following Lambda functions:
@@ -189,7 +189,7 @@ You can deploy each function manually or automate using AWS SAM/CDK.
 
 Example (manual deploy):
 
- <pre> ```
+ <pre> 
 cd lambda_functions/lex_invocation
 zip function.zip *
 aws lambda create-function --function-name LexInvocationLambda \
@@ -197,7 +197,7 @@ aws lambda create-function --function-name LexInvocationLambda \
     --handler app.handler --zip-file fileb://function.zip
 Repeat for other Lambda functions.
 
-   </pre> ```
+   </pre> 
 
 5️⃣ Create Amazon Lex Bot
 Configure Amazon Lex with intents for:
@@ -209,7 +209,7 @@ Ensure LexInvocationLambda is configured as the Lambda fulfillment for intents.
 6️⃣ Configure SQS Queue
 Create an SQS queue for message orchestration.
 
- <pre> ```aws sqs create-queue --queue-name ChatbotMessageQueue </pre> ```
+ <pre> aws sqs create-queue --queue-name ChatbotMessageQueue </pre> 
 
 7️⃣ Deploy Step Functions Workflow
 Create a Step Functions state machine to orchestrate:
@@ -231,7 +231,7 @@ LexInvocationLambda (Request API)
 ResponseLambda (Response API)
 
 Example:
- <pre> ```aws apigateway create-rest-api --name 'ChatbotRequestAPI' </pre> ```
+ <pre> aws apigateway create-rest-api --name 'ChatbotRequestAPI' </pre> 
 
 Deploy APIs and note down the invoke URLs.
 
